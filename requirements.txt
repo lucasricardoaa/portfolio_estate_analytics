@@ -1,0 +1,9 @@
+dbt-core
+dbt-bigquery
+google-cloud-bigquery
+google-cloud-bigquery[pandas]
+openpyxl
+pandas
+pyarrow
+faker
+colorlog

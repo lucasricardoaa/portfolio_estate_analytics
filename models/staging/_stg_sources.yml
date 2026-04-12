@@ -1,0 +1,125 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ env_var('GCP_PROJECT_ID') }}"
+    schema: raw
+    tables:
+      - name: raw_payments
+        description: "Parcelas pagas carregadas pelo script de ingestão. Tabela append-only — múltiplos carregamentos do mesmo mês são identificados por date_upload."
+        columns:
+          - name: date_reference
+            tests:
+              - not_null
+          - name: date_upload
+            tests:
+              - not_null
+          - name: run_id
+            tests:
+              - not_null
+          - name: contract_code
+            tests:
+              - not_null
+          - name: installment_id
+            tests:
+              - not_null
+
+      - name: raw_receivables
+        description: "Parcelas não pagas carregadas pelo script de ingestão. value_payment e date_payment são sempre NULL. Tabela append-only."
+        columns:
+          - name: date_reference
+            tests:
+              - not_null
+          - name: date_upload
+            tests:
+              - not_null
+          - name: run_id
+            tests:
+              - not_null
+          - name: contract_code
+            tests:
+              - not_null
+          - name: installment_id
+            tests:
+              - not_null
+
+models:
+  - name: stg_payments
+    description: "Parcelas pagas com tipagem explícita e deduplicação pelo carregamento mais recente por mês de referência (MAX date_upload por date_reference)."
+    columns:
+      - name: run_id
+        description: "UUID da execução do script que gerou este registro."
+        tests:
+          - not_null
+      - name: date_reference
+        description: "Primeiro dia do mês de referência do arquivo."
+        tests:
+          - not_null
+      - name: date_upload
+        description: "Timestamp UTC do carregamento."
+        tests:
+          - not_null
+      - name: contract_code
+        description: "Hash do código do contrato (anonimizado)."
+        tests:
+          - not_null
+      - name: installment_id
+        description: "Número sequencial da parcela no contrato."
+        tests:
+          - not_null
+      - name: titular_code
+        description: "Hash do CPF ou CNPJ do titular (anonimizado)."
+        tests:
+          - not_null
+      - name: payment_status
+        description: "Sempre 'paid' para parcelas pagas."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['paid']
+      - name: titular_type
+        description: "Classificação do titular: 'PF' (CPF) ou 'PJ' (CNPJ). Derivado antes do hash pelo script de anonimização."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PF', 'PJ']
+
+  - name: stg_receivables
+    description: "Parcelas não pagas com tipagem explícita e deduplicação pelo carregamento mais recente por mês de referência. value_payment e date_payment são sempre NULL."
+    columns:
+      - name: run_id
+        description: "UUID da execução do script que gerou este registro."
+        tests:
+          - not_null
+      - name: date_reference
+        description: "Primeiro dia do mês de referência do arquivo."
+        tests:
+          - not_null
+      - name: date_upload
+        description: "Timestamp UTC do carregamento."
+        tests:
+          - not_null
+      - name: contract_code
+        description: "Hash do código do contrato (anonimizado)."
+        tests:
+          - not_null
+      - name: installment_id
+        description: "Número sequencial da parcela no contrato."
+        tests:
+          - not_null
+      - name: titular_code
+        description: "Hash do CPF ou CNPJ do titular (anonimizado)."
+        tests:
+          - not_null
+      - name: payment_status
+        description: "Sempre 'pending' para parcelas não pagas."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['pending']
+      - name: titular_type
+        description: "Classificação do titular: 'PF' (CPF) ou 'PJ' (CNPJ). Derivado antes do hash pelo script de anonimização."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PF', 'PJ']

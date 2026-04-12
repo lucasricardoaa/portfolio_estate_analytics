@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: int_installments_unified
+    description: >
+      União de stg_payments e stg_receivables via UNION ALL.
+      Expõe todas as parcelas do projeto em uma única view.
+      O campo payment_status ('paid' | 'pending') discrimina a origem.
+      Herda a deduplicação por MAX(date_upload) aplicada nas camadas de staging.
+
+  - name: int_contracts
+    description: >
+      Dimensão de contratos extraída de int_installments_unified, deduplicada por contract_code.
+      Mantém o carregamento mais recente por mês de referência via ROW_NUMBER.
+      Consolida atributos do contrato e do titular anonimizado para consumo pela camada de marts.
+
+  - name: int_units
+    description: >
+      Dimensão de unidades imobiliárias extraída de int_installments_unified, deduplicada por unit_id.
+      Mantém o carregamento mais recente por mês de referência via ROW_NUMBER.
+      Consolida atributos físicos do imóvel para consumo pela camada de marts.

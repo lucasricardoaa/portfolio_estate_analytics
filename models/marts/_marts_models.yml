@@ -1,0 +1,188 @@
+version: 2
+
+models:
+  - name: fct_installments
+    description: >
+      Tabela de fatos no nível de parcela por mês de referência.
+      Granularidade: uma linha por contract_code + installment_id + date_reference.
+      Três FKs para dim_date: mês de referência, vencimento e pagamento.
+      date_payment_sk é NULL para parcelas com payment_status = 'pending'.
+    columns:
+      - name: installment_sk
+        description: "Chave surrogate da parcela (PK). Gerada a partir de contract_code + installment_id + date_reference."
+        tests:
+          - not_null
+          - unique
+      - name: contract_sk
+        description: "FK → dim_contract."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_contract')
+              field: contract_sk
+      - name: unit_sk
+        description: "FK → dim_unit."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_unit')
+              field: unit_sk
+      - name: titular_sk
+        description: "FK → dim_titular."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_titular')
+              field: titular_sk
+      - name: date_reference_sk
+        description: "FK → dim_date (mês de referência do arquivo)."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_sk
+      - name: date_maturity_sk
+        description: "FK → dim_date (data de vencimento da parcela)."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_sk
+      - name: date_payment_sk
+        description: "FK → dim_date (data de pagamento). NULL para payment_status = 'pending'."
+      - name: payment_status
+        description: "Status da parcela: 'paid' (paga) ou 'pending' (não paga)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['paid', 'pending']
+      - name: date_reference
+        description: "Mês de referência do arquivo (primeiro dia do mês)."
+        tests:
+          - not_null
+      - name: installment_id
+        description: "Número sequencial da parcela no contrato."
+        tests:
+          - not_null
+      - name: date_maturity
+        description: "Data de vencimento da parcela."
+        tests:
+          - not_null
+      - name: original_value
+        description: "Valor original da parcela."
+      - name: present_value
+        description: "Valor presente da parcela."
+      - name: value_payment
+        description: "Valor efetivamente pago. NULL para parcelas pendentes."
+      - name: interest_rate
+        description: "Taxa de juros aplicada."
+      - name: index
+        description: "Índice de correção monetária (ex: INCC)."
+      - name: financing_type
+        description: "Tipo de financiamento."
+
+  - name: dim_titular
+    description: >
+      Dimensão do titular do contrato — pessoa física (CPF) ou jurídica (CNPJ), ambos anonimizados.
+      Um titular pode possuir múltiplos contratos. SCD Type 1.
+    columns:
+      - name: titular_sk
+        description: "Chave surrogate (PK). Gerada a partir de titular_code."
+        tests:
+          - not_null
+          - unique
+      - name: titular_code
+        description: "Hash do CPF ou CNPJ (anonimizado, 12 chars)."
+        tests:
+          - not_null
+      - name: titular_name
+        description: "Nome fictício gerado pelo Faker com seed fixo."
+        tests:
+          - not_null
+      - name: titular_type
+        description: "Classificação do titular: 'PF' (CPF) ou 'PJ' (CNPJ)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PF', 'PJ']
+
+  - name: dim_contract
+    description: >
+      Dimensão do contrato imobiliário. Contém FKs para dim_titular e dim_unit.
+      SCD Type 1 — sobrescrita simples com dados do mês mais recente.
+    columns:
+      - name: contract_sk
+        description: "Chave surrogate (PK). Gerada a partir de contract_code."
+        tests:
+          - not_null
+          - unique
+      - name: contract_code
+        description: "Hash do código do contrato (anonimizado, 8 chars)."
+        tests:
+          - not_null
+      - name: titular_sk
+        description: "FK → dim_titular."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_titular')
+              field: titular_sk
+      - name: unit_sk
+        description: "FK → dim_unit."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_unit')
+              field: unit_sk
+      - name: emission_date
+        description: "Data de emissão do contrato."
+      - name: base_date
+        description: "Data base do contrato."
+      - name: financing_type
+        description: "Tipo de financiamento."
+      - name: value_original
+        description: "Valor original do imóvel no contrato."
+
+  - name: dim_unit
+    description: >
+      Dimensão da unidade imobiliária. Contém atributos físicos e do empreendimento (fictícios).
+      SCD Type 1 — sobrescrita simples com dados do mês mais recente.
+    columns:
+      - name: unit_sk
+        description: "Chave surrogate (PK). Gerada a partir de unit_id."
+        tests:
+          - not_null
+          - unique
+      - name: unit_id
+        description: "ID da unidade imobiliária."
+        tests:
+          - not_null
+      - name: estate_name
+        description: "Nome fictício do empreendimento."
+      - name: property_type
+        description: "Tipo do imóvel (ex: APARTAMENTO)."
+      - name: private_area
+        description: "Área privativa em m²."
+      - name: usable_area
+        description: "Área útil em m²."
+
+  - name: dim_date
+    description: >
+      Dimensão de datas gerada via dbt_utils.date_spine.
+      Cobre o intervalo de 2022-01-01 a 2028-12-31.
+      Usada para três papéis distintos em fct_installments: mês de referência, vencimento e pagamento.
+      Nomes de mês e dia em português.
+    columns:
+      - name: date_sk
+        description: "Chave surrogate (PK). Gerada a partir de date_day."
+        tests:
+          - not_null
+          - unique
+      - name: date_day
+        description: "Data completa."
+        tests:
+          - not_null
+      - name: year_month
+        description: "Formato YYYY-MM para agrupamentos mensais."
+        tests:
+          - not_null
