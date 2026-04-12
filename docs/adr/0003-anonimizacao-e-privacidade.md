@@ -103,7 +103,7 @@ múltiplos empreendimentos.
 
 ### Script de anonimização
 
-O script `scripts/anonymize.py` é executado manualmente pelo desenvolvedor
+O script `scripts/anonymize_and_load.py` é executado manualmente pelo desenvolvedor
 antes de qualquer commit em `/data/raw/`. Ele:
 
 1. Lê cada arquivo XLSX de `/data/original/`
@@ -117,7 +117,7 @@ O script **não é versionado no repositório** — ele contém o salt e o
 mapeamento de substituição dos dados comerciais sensíveis. O desenvolvedor
 deve mantê-lo localmente junto com `/data/original/`.
 
-O repositório deve conter apenas um arquivo `scripts/anonymize_template.py`
+O repositório deve conter apenas um arquivo `scripts/anonymize_and_load_template.py`
 com a estrutura do script e comentários explicando onde o salt e o
 mapeamento devem ser preenchidos — sem os valores reais.
 
@@ -193,7 +193,7 @@ Se qualquer verificação falhar, o script encerra com erro e impede o commit.
 
 ### Negativas / Trade-offs
 
-- **Script não versionado:** o `anonymize.py` completo (com salt e
+- **Script não versionado:** o `anonymize_and_load.py` completo (com salt e
   mapeamento) fica apenas na máquina do desenvolvedor — se perdido,
   a reprodução exata da anonimização é impossível; o template versionado
   permite recriar o script, mas não garante os mesmos valores de saída

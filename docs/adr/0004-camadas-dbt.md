@@ -46,6 +46,7 @@ BigQuery — dataset: raw  (carregado pelo script de ingestão)
         ↓
 [marts]  — dataset: portfolio_estate_analytics_marts
   ├── fct_installments
+  ├── dim_titular
   ├── dim_contract
   ├── dim_unit
   └── dim_date
@@ -270,6 +271,7 @@ portfolio_estate_analytics/
 │   │   └── _int_models.yml
 │   └── marts/
 │       ├── fct_installments.sql
+│       ├── dim_titular.sql
 │       ├── dim_contract.sql
 │       ├── dim_unit.sql
 │       ├── dim_date.sql
