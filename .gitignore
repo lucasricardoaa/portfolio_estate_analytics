@@ -1,0 +1,27 @@
+# Dados originais — NUNCA versionar
+/data/original/
+/data/processed/
+
+# Credenciais GCP — NUNCA versionar
+*.json
+application_default_credentials.json
+service_account*.json
+
+# dbt
+profiles.yml
+target/
+dbt_packages/
+
+# Script completo de anonimização (com salt e mapeamentos)
+scripts/anonymize_and_load.py
+
+# Python
+__pycache__/
+*.py[cod]
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
