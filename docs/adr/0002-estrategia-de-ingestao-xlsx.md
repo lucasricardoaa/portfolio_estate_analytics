@@ -277,9 +277,9 @@ Todas registradas em `requirements.txt`, versionado no repositório.
 
 - As tabelas de entrada do dbt são `raw.raw_payments` e
   `raw.raw_receivables` no BigQuery — nunca `read_xlsx()` ou seeds
-- Todas as tabelas raw possuem três colunas de rastreabilidade
-  adicionadas pelo script: `run_id` (STRING), `date_reference` (DATE)
-  e `date_upload` (DATETIME)
+- Todas as tabelas raw possuem quatro colunas de rastreabilidade
+  adicionadas pelo script: `run_id` (STRING), `date_reference` (DATE),
+  `date_upload` (DATETIME) e `titular_type` (STRING)
 - O `run_id` correlaciona cada linha das tabelas raw com sua execução
   em `raw.pipeline_runs` — preserve-o até pelo menos a camada
   intermediate
