@@ -1,4 +1,4 @@
-# Dados originais — NUNCA versionar
+# Dados — NUNCA versionar
 /data/original/
 /data/processed/
 
@@ -14,6 +14,9 @@ dbt_packages/
 
 # Script completo de anonimização (com salt e mapeamentos)
 scripts/anonymize_and_load.py
+
+# Logs de execução — nunca versionar
+/logs/
 
 # Python
 __pycache__/

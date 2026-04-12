@@ -72,8 +72,9 @@ explícita, adiciona `payment_status = 'pending'`. As colunas
 - Prefixo obrigatório: `stg_`
 - Materialização: `view` (nunca `table` em staging)
 - Tipagem explícita de todas as colunas via `CAST()`
-- Colunas `date_reference` (DATE) e `date_upload` (DATETIME) já
-  disponíveis nas tabelas raw — não recriar, apenas tipar e propagar
+- Colunas `run_id` (STRING), `date_reference` (DATE) e `date_upload`
+  (DATETIME) já disponíveis nas tabelas raw — não recriar, apenas
+  tipar e propagar
 - Coluna `payment_status` adicionada em ambos os modelos
 - **Deduplicação obrigatória:** cada modelo de staging deve expor
   apenas o carregamento mais recente por `date_reference`, filtrando
@@ -108,6 +109,7 @@ deduplicated AS (
 renamed AS (
     SELECT
         -- metadados de rastreabilidade
+        CAST(run_id AS STRING)                  AS run_id,
         CAST(date_reference AS DATE)            AS date_reference,
         CAST(date_upload AS DATETIME)           AS date_upload,
         'paid'                                  AS payment_status,

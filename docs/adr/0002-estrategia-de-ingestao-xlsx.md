@@ -112,11 +112,12 @@ subpasta.
 
 ### Colunas de rastreabilidade adicionadas pelo script
 
-O script adiciona duas colunas de controle em todos os registros
+O script adiciona três colunas de controle em todos os registros
 antes do carregamento no BigQuery:
 
 | Coluna | Tipo | Descrição |
 |---|---|---|
+| `run_id` | STRING | UUID único da execução do script que gerou este registro — correlaciona com `raw.pipeline_runs` |
 | `date_reference` | DATE | Primeiro dia do mês de referência derivado do nome da subpasta (`YYYY-MM` → `YYYY-MM-01`) |
 | `date_upload` | DATETIME | Timestamp UTC do momento exato da execução do script |
 
@@ -124,6 +125,8 @@ Essas colunas permitem:
 - Filtrar todos os registros de um mês específico via `date_reference`
 - Identificar e distinguir múltiplos carregamentos do mesmo mês
   via `date_upload`
+- Correlacionar cada linha das tabelas raw com sua execução em
+  `raw.pipeline_runs` via `run_id`
 - Auditar reprocessamentos sem perda de histórico
 
 ### Destino no BigQuery
@@ -273,8 +276,12 @@ Todas registradas em `requirements.txt`, versionado no repositório.
 
 - As tabelas de entrada do dbt são `raw.raw_payments` e
   `raw.raw_receivables` no BigQuery — nunca `read_xlsx()` ou seeds
-- Todas as tabelas raw possuem as colunas `date_reference` (DATE)
-  e `date_upload` (DATETIME) adicionadas pelo script de ingestão
+- Todas as tabelas raw possuem três colunas de rastreabilidade
+  adicionadas pelo script: `run_id` (STRING), `date_reference` (DATE)
+  e `date_upload` (DATETIME)
+- O `run_id` correlaciona cada linha das tabelas raw com sua execução
+  em `raw.pipeline_runs` — preserve-o até pelo menos a camada
+  intermediate
 - **Padrão obrigatório em staging:** sempre filtrar pelo carregamento
   mais recente usando `MAX(date_upload)` agrupado por `date_reference`
   — nunca expor registros duplicados de reprocessamentos para camadas

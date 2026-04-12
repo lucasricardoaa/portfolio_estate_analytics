@@ -101,6 +101,9 @@ profiles.yml
 
 # Script completo de anonimização (com salt e mapeamentos)
 scripts/anonymize_and_load.py
+
+# Logs de execução — nunca versionar
+/logs/
 ```
 
 ---
