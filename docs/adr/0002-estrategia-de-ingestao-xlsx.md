@@ -112,7 +112,7 @@ subpasta.
 
 ### Colunas de rastreabilidade adicionadas pelo script
 
-O script adiciona três colunas de controle em todos os registros
+O script adiciona quatro colunas de controle em todos os registros
 antes do carregamento no BigQuery:
 
 | Coluna | Tipo | Descrição |
@@ -120,6 +120,7 @@ antes do carregamento no BigQuery:
 | `run_id` | STRING | UUID único da execução do script que gerou este registro — correlaciona com `raw.pipeline_runs` |
 | `date_reference` | DATE | Primeiro dia do mês de referência derivado do nome da subpasta (`YYYY-MM` → `YYYY-MM-01`) |
 | `date_upload` | DATETIME | Timestamp UTC do momento exato da execução do script |
+| `titular_type` | STRING | Classificação `'PF'` ou `'PJ'` extraída do formato original de `titular_code` **antes** do hash — gerada pelo script de anonimização |
 
 Essas colunas permitem:
 - Filtrar todos os registros de um mês específico via `date_reference`

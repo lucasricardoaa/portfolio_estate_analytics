@@ -218,7 +218,9 @@ Seguem modelagem dimensional detalhada no ADR-005.
 
 `fct_installments` — tabela de fatos no nível de parcela.
 
-`dim_contract` — dimensão de contrato e titular anonimizado.
+`dim_titular` — dimensão do titular anonimizado (PF ou PJ).
+
+`dim_contract` — dimensão do contrato, com FK para titular e unidade.
 
 `dim_unit` — dimensão da unidade imobiliária.
 
