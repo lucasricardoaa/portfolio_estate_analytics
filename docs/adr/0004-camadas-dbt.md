@@ -291,6 +291,10 @@ portfolio_estate_analytics/
 │   └── verify_anonymization.py         ← versionado
 ├── seeds/
 ├── tests/
+│   ├── raw/
+│   ├── staging/
+│   ├── intermediate/
+│   └── marts/
 ├── packages.yml
 ├── .gitignore
 ├── dbt_project.yml
@@ -400,8 +404,8 @@ portfolio_estate_analytics:
 ## Decisões relacionadas
 
 - **Depende de:** ADR-001 (Engine) — BigQuery define os tipos
-  disponíveis (`INT64`, `STRING`, `NUMERIC`, `DATE`) e o comportamento
-  de views e tables
+  disponíveis (`INT64`, `STRING`, `NUMERIC`, `DATE`, `DATETIME`)
+  e o comportamento de views e tables
 - **Depende de:** ADR-002 (Ingestão) — as tabelas `raw.raw_payments`
   e `raw.raw_receivables` são os pontos de entrada do dbt
 - **Depende de:** ADR-003 (Anonimização) — staging recebe dados

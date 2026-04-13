@@ -52,8 +52,9 @@ entrega de modelo.
 
 ### Testes na camada Raw
 
-Os testes raw são executados via `dbt source test` sobre as tabelas
-`raw.raw_payments` e `raw.raw_receivables` declaradas em `_stg_sources.yml`.
+Os testes raw são executados via `dbt test --select source:raw` sobre
+as tabelas `raw.raw_payments` e `raw.raw_receivables` declaradas em
+`_stg_sources.yml`.
 
 **Testes genéricos:**
 
