@@ -11,6 +11,7 @@ service_account*.json
 profiles.yml
 target/
 dbt_packages/
+dbt_internal_packages/
 
 # Script completo de anonimização (com salt e mapeamentos)
 scripts/anonymize_and_load.py
@@ -28,3 +29,8 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Evidence.dev — artefatos gerados
+/reports/build/
+/reports/.evidence/
+/reports/node_modules/

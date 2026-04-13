@@ -104,6 +104,11 @@ scripts/anonymize_and_load.py
 
 # Logs de execução — nunca versionar
 /logs/
+
+# Evidence.dev — artefatos gerados
+/reports/build/
+/reports/.evidence/
+/reports/node_modules/
 ```
 
 ---

@@ -103,46 +103,46 @@ múltiplos empreendimentos.
 
 ### Script de anonimização
 
-O script `scripts/anonymize_and_load.py` é executado manualmente pelo desenvolvedor
-antes de qualquer commit em `/data/raw/`. Ele:
+O script `scripts/anonymize_and_load.py` é executado manualmente pelo
+desenvolvedor para processar os dados originais. Ele:
 
-1. Lê cada arquivo XLSX de `/data/original/`
-2. Aplica as transformações definidas neste ADR campo a campo
-3. Renomeia o arquivo para o padrão `YYYY-MM_contratos.xlsx`
-   (conforme ADR-002)
-4. Grava o resultado em `/data/raw/`
-5. Nunca modifica os arquivos originais
+1. Lê cada arquivo XLSX de `/data/original/YYYY-MM/`
+2. Aplica as transformações definidas neste ADR campo a campo,
+   em memória
+3. Salva cópia Parquet anonimizada em `/data/processed/YYYY-MM/`
+   para auditoria local
+4. Carrega os dados diretamente no BigQuery via API
+   (`raw.raw_payments` e `raw.raw_receivables`)
+5. Registra a execução em `raw.pipeline_runs` (ADR-007)
+6. Nunca modifica os arquivos originais
+7. Nunca persiste dados anonimizados em formato intermediário
+   no disco antes do carregamento
 
 O script **não é versionado no repositório** — ele contém o salt e o
 mapeamento de substituição dos dados comerciais sensíveis. O desenvolvedor
 deve mantê-lo localmente junto com `/data/original/`.
 
-O repositório deve conter apenas um arquivo `scripts/anonymize_and_load_template.py`
+O repositório contém apenas `scripts/anonymize_and_load_template.py`
 com a estrutura do script e comentários explicando onde o salt e o
 mapeamento devem ser preenchidos — sem os valores reais.
 
-### Campos que não requerem anonimização
-
-Todos os demais campos (`installment_type`, `date_maturity`, `present_value`,
-`original_value`, `value_payment`, `date_payment`, `interest_rate`, etc.)
-são dados financeiros e operacionais de parcelas — não identificam pessoas
-físicas nem revelam a identidade da incorporadora de forma direta. Esses
-campos são versionados sem alteração.
-
 ### Verificação pós-anonimização
 
-Antes de qualquer commit, o desenvolvedor deve executar:
+O script `scripts/verify_anonymization.py` pode ser executado para
+validar os dados carregados no BigQuery ou os Parquets em
+`/data/processed/`:
 
 ```bash
 python scripts/verify_anonymization.py
 ```
 
-Este script verifica que nenhum arquivo em `/data/raw/` contém:
+Este script verifica que nenhum registro contém:
 - Strings que correspondam ao padrão de CPF (`\d{3}\.\d{3}\.\d{3}-\d{2}`)
+- Strings que correspondam ao padrão de CNPJ (`\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}`)
 - O nome real do empreendimento
 - O endereço real do empreendimento
 
-Se qualquer verificação falhar, o script encerra com erro e impede o commit.
+Se qualquer verificação falhar, o script encerra com erro.
 
 ---
 
