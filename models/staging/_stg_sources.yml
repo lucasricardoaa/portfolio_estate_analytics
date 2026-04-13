@@ -76,13 +76,15 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['paid']
+              arguments:
+                values: ['paid']
       - name: titular_type
         description: "Classificação do titular: 'PF' (CPF) ou 'PJ' (CNPJ). Derivado antes do hash pelo script de anonimização."
         tests:
           - not_null
           - accepted_values:
-              values: ['PF', 'PJ']
+              arguments:
+                values: ['PF', 'PJ']
 
   - name: stg_receivables
     description: "Parcelas não pagas com tipagem explícita e deduplicação pelo carregamento mais recente por mês de referência. value_payment e date_payment são sempre NULL."
@@ -116,10 +118,12 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['pending']
+              arguments:
+                values: ['pending']
       - name: titular_type
         description: "Classificação do titular: 'PF' (CPF) ou 'PJ' (CNPJ). Derivado antes do hash pelo script de anonimização."
         tests:
           - not_null
           - accepted_values:
-              values: ['PF', 'PJ']
+              arguments:
+                values: ['PF', 'PJ']

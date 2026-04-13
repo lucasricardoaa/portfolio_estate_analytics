@@ -3,7 +3,7 @@ WITH date_spine AS (
         dbt_utils.date_spine(
             datepart="day",
             start_date="cast('2022-01-01' as date)",
-            end_date="cast('2028-12-31' as date)"
+            end_date="cast('2035-12-31' as date)"
         )
     }}
 ),

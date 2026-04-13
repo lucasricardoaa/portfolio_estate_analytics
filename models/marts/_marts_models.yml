@@ -18,36 +18,41 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_contract')
-              field: contract_sk
+              arguments:
+                to: ref('dim_contract')
+                field: contract_sk
       - name: unit_sk
         description: "FK → dim_unit."
         tests:
           - not_null
           - relationships:
-              to: ref('dim_unit')
-              field: unit_sk
+              arguments:
+                to: ref('dim_unit')
+                field: unit_sk
       - name: titular_sk
         description: "FK → dim_titular."
         tests:
           - not_null
           - relationships:
-              to: ref('dim_titular')
-              field: titular_sk
+              arguments:
+                to: ref('dim_titular')
+                field: titular_sk
       - name: date_reference_sk
         description: "FK → dim_date (mês de referência do arquivo)."
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
-              field: date_sk
+              arguments:
+                to: ref('dim_date')
+                field: date_sk
       - name: date_maturity_sk
         description: "FK → dim_date (data de vencimento da parcela)."
         tests:
           - not_null
           - relationships:
-              to: ref('dim_date')
-              field: date_sk
+              arguments:
+                to: ref('dim_date')
+                field: date_sk
       - name: date_payment_sk
         description: "FK → dim_date (data de pagamento). NULL para payment_status = 'pending'."
       - name: payment_status
@@ -55,7 +60,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['paid', 'pending']
+              arguments:
+                values: ['paid', 'pending']
       - name: date_reference
         description: "Mês de referência do arquivo (primeiro dia do mês)."
         tests:
@@ -104,7 +110,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['PF', 'PJ']
+              arguments:
+                values: ['PF', 'PJ']
 
   - name: dim_contract
     description: >
@@ -125,15 +132,17 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_titular')
-              field: titular_sk
+              arguments:
+                to: ref('dim_titular')
+                field: titular_sk
       - name: unit_sk
         description: "FK → dim_unit."
         tests:
           - not_null
           - relationships:
-              to: ref('dim_unit')
-              field: unit_sk
+              arguments:
+                to: ref('dim_unit')
+                field: unit_sk
       - name: emission_date
         description: "Data de emissão do contrato."
       - name: base_date

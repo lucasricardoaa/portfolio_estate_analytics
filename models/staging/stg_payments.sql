@@ -18,6 +18,22 @@ deduplicated AS (
         AND source.date_upload    = latest_upload.max_date_upload
 ),
 
+-- Segunda dedup: remove duplicatas internas da planilha (mesmo contract_code + installment_id + date_reference)
+row_numbered AS (
+    SELECT *,
+           ROW_NUMBER() OVER (
+               PARTITION BY contract_code, installment_id, date_reference
+               ORDER BY date_upload DESC
+           ) AS _row_num
+    FROM deduplicated
+),
+
+deduped_final AS (
+    SELECT * EXCEPT (_row_num)
+    FROM row_numbered
+    WHERE _row_num = 1
+),
+
 renamed AS (
     SELECT
         -- metadados de rastreabilidade
@@ -70,7 +86,7 @@ renamed AS (
         -- campos auxiliares
         CAST(note                 AS STRING)   AS note
 
-    FROM deduplicated
+    FROM deduped_final
 )
 
 SELECT * FROM renamed
