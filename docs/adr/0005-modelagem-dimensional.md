@@ -24,7 +24,7 @@ A análise dos dados revela:
   vários contratos e unidades distintas — `dim_titular` e `dim_unit`
   são dimensões independentes
 - **CNPJ confirmado:** titulares podem ser pessoas jurídicas
-  (`17.764.495/0001-28` possui 4 contratos no dataset)
+  (ex: `XX.XXX.XXX/0001-XX` possui 4 contratos no dataset)
 - **Status de parcela:** o campo `payment_status` discrimina parcelas
   pagas (`paid`) de não pagas (`pending`), derivado da aba de origem
 - **Snapshot mensal:** cada arquivo representa o estado das parcelas

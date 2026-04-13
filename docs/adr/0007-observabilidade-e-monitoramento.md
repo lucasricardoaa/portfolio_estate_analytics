@@ -195,9 +195,10 @@ de ingestão — mesma pasta, mesmo `.gitignore`.
 
 ---
 
-### Atualização do `.gitignore`
+### Entradas no `.gitignore`
 
-Adicionar à configuração existente do ADR-001:
+A seguinte entrada foi adicionada ao `.gitignore` do projeto
+(já aplicada):
 
 ```
 # Logs de execução — nunca versionar
@@ -206,9 +207,10 @@ Adicionar à configuração existente do ADR-001:
 
 ---
 
-### Atualização do `requirements.txt`
+### Dependência no `requirements.txt`
 
-Adicionar dependência de log colorido:
+A seguinte dependência foi adicionada ao `requirements.txt`
+(já aplicada):
 
 ```
 colorlog

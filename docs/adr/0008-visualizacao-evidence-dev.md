@@ -65,12 +65,12 @@ Nunca consultar staging ou intermediate diretamente.
 
 ### Publicação
 
-O site gerado pelo Evidence.dev (`build/`) é publicado como site
-estático. A plataforma de publicação será definida na implementação
-(GitHub Pages, Netlify ou Vercel — todas suportam sites estáticos
-gratuitamente com URL pública).
+O site gerado pelo Evidence.dev (`build/`) é publicado via Vercel
+ou Netlify apontando para o subdiretório `reports/` do monorepo.
+A plataforma de publicação será confirmada durante a implementação
+— ambas suportam sites estáticos gratuitamente com URL pública.
 
-O diretório `build/` nunca é versionado por três razões:
+O diretório `reports/build/` nunca é versionado por três razões:
 
 1. **É um artefato gerado, não código-fonte** — assim como o
    diretório `target/` do dbt, o `build/` é o resultado de um
@@ -119,12 +119,6 @@ Adições ao `.gitignore`:
 /reports/.evidence/
 /reports/node_modules/
 ```
-
-### Publicação
-
-O site estático gerado pelo Evidence.dev é publicado via Vercel
-ou Netlify apontando para o subdiretório `reports/` do monorepo.
-A plataforma de publicação será confirmada durante a implementação.
 
 ---
 

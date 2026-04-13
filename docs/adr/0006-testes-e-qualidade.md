@@ -126,7 +126,7 @@ Os mesmos dois testes são replicados para `raw_receivables`.
 Foco: deduplicação por `MAX(date_upload)`, campos obrigatórios e
 valores aceitos.
 
-**Testes genéricos em `_stg_sources.yml`:**
+**Testes genéricos em `_stg_models.yml`:**
 
 ```yaml
 models:

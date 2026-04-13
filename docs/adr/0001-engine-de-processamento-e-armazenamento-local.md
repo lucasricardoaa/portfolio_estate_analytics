@@ -72,7 +72,8 @@ scripts/anonymize_and_load.py
         ↓
 BigQuery (dataset: raw)           ← privado na conta GCP
   ├── raw_payments
-  └── raw_receivables
+  ├── raw_receivables
+  └── pipeline_runs
         ↓
 dbt run (staging → intermediate → marts)
 

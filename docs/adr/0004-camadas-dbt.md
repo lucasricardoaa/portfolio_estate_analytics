@@ -419,7 +419,7 @@ portfolio_estate_analytics:
 - Nunca referencie tabelas raw diretamente em intermediate ou marts
   — sempre passe por staging
 - Tipos BigQuery a usar: `INT64`, `STRING`, `NUMERIC`, `DATE`,
-  `TIMESTAMP` — nunca tipos DuckDB como `VARCHAR` ou `DECIMAL`
+  `DATETIME` — nunca tipos DuckDB como `VARCHAR` ou `DECIMAL`
 - O `project_id` GCP deve sempre vir de `env_var('GCP_PROJECT_ID')`
   — nunca hardcoded
 - O `profiles.yml` está no `.gitignore` — nunca instrua o usuário
