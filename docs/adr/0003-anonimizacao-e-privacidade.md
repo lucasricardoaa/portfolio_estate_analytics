@@ -15,7 +15,8 @@ Os arquivos XLSX contêm dois tipos de informações protegidas:
 
 **Dados PII (LGPD)** — informações de pessoas físicas identificáveis:
 - `titular_name`: nome completo do titular do contrato
-- `titular_code`: CPF do titular, no formato `NNN.NNN.NNN-NN`
+- `titular_code`: CPF ou CNPJ do titular (`NNN.NNN.NNN-NN` para PF,
+  `NN.NNN.NNN/NNNN-NN` para PJ)
 
 **Dados comercialmente sensíveis** — informações da incorporadora sujeitas
 a acordo de confidencialidade:

@@ -117,7 +117,7 @@ Metabase      →  Dashboard visual complementar
 | ADR-008 | Visualização com Evidence.dev | Aceito |
 | ADR-009 | Visualização com Metabase | Aceito |
 
-Os ADRs 008 e 009 devem ser criados antes do início da implementação
+Os ADRs 008 e 009 foram aceitos antes do início da implementação
 da camada de visualização.
 
 ---

@@ -261,6 +261,7 @@ portfolio_estate_analytics/
 │   └── processed/       ← nunca versionado (.gitignore)
 ├── docs/
 │   └── adr/             ← todos os ADRs do projeto
+├── logs/                ← nunca versionado (.gitignore)
 ├── macros/
 ├── models/
 │   ├── staging/
@@ -279,6 +280,10 @@ portfolio_estate_analytics/
 │       ├── dim_unit.sql
 │       ├── dim_date.sql
 │       └── _marts_models.yml
+├── reports/             ← Evidence.dev (ADR-008)
+│   ├── pages/           ← arquivos .md com SQL embutido
+│   ├── sources/         ← configuração de conexão com BigQuery
+│   └── evidence.plugins.yaml
 ├── scripts/
 │   ├── anonymize_and_load_template.py  ← versionado (sem salt/mapeamento)
 │   └── verify_anonymization.py         ← versionado
