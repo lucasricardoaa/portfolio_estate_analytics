@@ -237,7 +237,7 @@ Se qualquer verificação falhar, o script encerra com erro.
   dados já anonimizados; nenhuma lógica de anonimização deve existir
   dentro do dbt
 - **Influencia:** ADR-006 (Testes e qualidade) — o script de verificação
-  pós-anonimização é um gate obrigatório antes do `dbt run`
+  pós-anonimização é um gate obrigatório antes do `dbt build`
 
 ---
 

@@ -33,7 +33,8 @@ exclusivas e bem delimitadas.
 ```
 BigQuery — dataset: raw  (carregado pelo script de ingestão)
   ├── raw_payments
-  └── raw_receivables
+  ├── raw_receivables
+  └── pipeline_runs
         ↓
 [staging]  — dataset: portfolio_estate_analytics_staging
   ├── stg_payments
@@ -247,7 +248,7 @@ packages:
     version: [">=1.0.0", "<2.0.0"]
 ```
 
-Instalar com `dbt deps` antes do primeiro `dbt run`.
+Instalar com `dbt deps` antes do primeiro `dbt build`.
 
 ---
 
@@ -341,7 +342,7 @@ portfolio_estate_analytics:
       type: bigquery
       method: oauth
       project: "{{ env_var('GCP_PROJECT_ID') }}"
-      dataset: portfolio_estate_analytics_dev
+      dataset: portfolio_estate_analytics
       threads: 4
       timeout_seconds: 300
 ```

@@ -25,7 +25,7 @@ houver testes nas tabelas raw e na camada de staging.
 **Risco de transformação:** joins incorretos, deduplicação falha por
 `MAX(date_upload)`, chaves surrogate não únicas ou referências FK
 quebradas podem corromper silenciosamente os modelos de marts sem
-que o `dbt run` falhe.
+que o `dbt build` falhe.
 
 A estratégia de testes deve cobrir ambos os vetores, camada por camada,
 sem criar overhead excessivo para um projeto de portfólio.
@@ -363,7 +363,7 @@ dbt test --select intermediate        # 3. Testa modelos intermediate
 dbt test --select marts               # 4. Testa modelos de marts
 ```
 
-Ou em uma única execução após `dbt run`:
+Ou em uma única execução com `dbt build`:
 
 ```bash
 dbt build  # executa run + test por camada em ordem de dependência

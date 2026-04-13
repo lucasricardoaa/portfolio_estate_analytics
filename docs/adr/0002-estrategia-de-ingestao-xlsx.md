@@ -189,6 +189,7 @@ openpyxl
 pandas
 pyarrow
 faker
+colorlog
 ```
 
 Todas registradas em `requirements.txt`, versionado no repositório.

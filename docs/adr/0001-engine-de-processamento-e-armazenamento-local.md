@@ -75,7 +75,7 @@ BigQuery (dataset: raw)           ← privado na conta GCP
   ├── raw_receivables
   └── pipeline_runs
         ↓
-dbt run (staging → intermediate → marts)
+dbt build (staging → intermediate → marts)
 
 [Nunca entra no Git]
 /data/original/     ❌
