@@ -219,12 +219,11 @@ acima.
 ## Notas para agentes Claude CLI
 
 - **Comece sempre por este documento** antes de ler qualquer outro ADR
-- Após ler o ADR-000, leia os ADRs 001–007 em ordem numérica
-- Para saber em qual fase do roadmap o projeto se encontra, pergunte
-  ao usuário — não assuma com base neste documento
-- Nunca tome decisões sobre visualização (Evidence.dev ou Metabase)
-  sem que os ADRs 008 e 009 existam — se o usuário pedir algo nessa
-  direção, sinalize que o ADR precisa ser criado primeiro
+- Após ler o ADR-000, leia os ADRs 001–009 em ordem numérica
+- Para saber em qual fase do roadmap o projeto se encontra, inspecione
+  a estrutura de arquivos e os commits do repositório
+- Os ADRs 008 (Evidence.dev) e 009 (Metabase) estão Aceitos — decisões
+  de visualização podem ser tomadas com base neles
 - O uso de Claude CLI no desenvolvimento é uma decisão aceita e
   documentada — não é necessário disclaimar isso em cada resposta
 - Nunca referencie `/data/original/`, `/data/processed/` ou `/logs/`

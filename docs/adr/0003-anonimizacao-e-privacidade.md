@@ -27,10 +27,11 @@ O repositório GitHub é público. Nenhum dado das categorias acima pode
 aparecer em nenhum arquivo versionado, em nenhuma forma — nem diretamente,
 nem em logs, nem em artefatos de teste.
 
-A anonimização é executada **antes** de qualquer commit, por um script
-Python dedicado que opera sobre os arquivos originais em `/data/original/`
-e grava os arquivos tratados em `/data/raw/`. Os originais nunca entram
-no repositório (ADR-001).
+A anonimização é executada pelo script `scripts/anonymize_and_load.py`,
+que opera sobre os arquivos originais em `/data/original/`, anonimiza
+em memória e carrega diretamente no BigQuery — sem persistência
+intermediária em disco. Uma cópia Parquet é salva em `/data/processed/`
+para auditoria local. Os originais nunca entram no repositório (ADR-001).
 
 O arquivo analisado contém um único empreendimento, mas os demais arquivos
 mensais podem conter empreendimentos distintos. A técnica de anonimização
@@ -226,11 +227,11 @@ Se qualquer verificação falhar, o script encerra com erro.
 
 ## Decisões relacionadas
 
-- **Depende de:** ADR-001 (Engine) — o fluxo de anonimização pré-commit
-  é definido como pré-condição do versionamento estabelecido no ADR-001
-- **Depende de:** ADR-002 (Ingestão) — a renomeação dos arquivos para
-  o padrão `YYYY-MM_contratos.xlsx` é responsabilidade do script de
-  anonimização definido neste ADR
+- **Depende de:** ADR-001 (Engine) — a anonimização ocorre em memória
+  e o destino dos dados é o BigQuery, conforme definido no ADR-001
+- **Depende de:** ADR-002 (Ingestão) — o script usa o nome da subpasta
+  `YYYY-MM/` em `/data/original/` como `date_reference`; não há
+  renomeação de arquivos
 - **Influencia:** ADR-004 (Camadas dbt) — a camada de staging recebe
   dados já anonimizados; nenhuma lógica de anonimização deve existir
   dentro do dbt

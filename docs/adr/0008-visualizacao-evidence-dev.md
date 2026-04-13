@@ -67,7 +67,7 @@ Nunca consultar staging ou intermediate diretamente.
 
 O site gerado pelo Evidence.dev (`build/`) é publicado como site
 estático. A plataforma de publicação será definida na implementação
-(GitHub Pages, Netlift ou Vercel — todas suportam sites estáticos
+(GitHub Pages, Netlify ou Vercel — todas suportam sites estáticos
 gratuitamente com URL pública).
 
 O diretório `build/` nunca é versionado por três razões:
@@ -183,8 +183,8 @@ A plataforma de publicação será confirmada durante a implementação.
 - **Depende de:** ADR-005 (Modelagem dimensional) — os modelos
   de marts são a fonte de dados exclusiva dos dashboards
 - **Depende de:** ADR-000 (Visão geral) — a decisão de monorepo
-  vs. repositório separado deve ser registrada no ADR-000 após
-  ser tomada
+  foi tomada e está registrada no ADR-000; o Evidence.dev vive
+  em `reports/` dentro do repositório principal
 - **Relacionado a:** ADR-009 (Metabase) — as duas ferramentas
   são complementares e devem cobrir análises distintas sem
   duplicação
