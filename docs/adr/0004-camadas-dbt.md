@@ -215,7 +215,7 @@ por `unit_id` e consolida atributos físicos do imóvel.
 **Responsabilidade:** entregar modelos prontos para consumo analítico.
 Seguem modelagem dimensional detalhada no ADR-005.
 
-**Modelos planejados:**
+**Modelos:**
 
 `fct_installments` — tabela de fatos no nível de parcela.
 
@@ -267,7 +267,8 @@ portfolio_estate_analytics/
 │   ├── staging/
 │   │   ├── stg_payments.sql
 │   │   ├── stg_receivables.sql
-│   │   └── _stg_sources.yml
+│   │   ├── _stg_sources.yml
+│   │   └── _stg_models.yml
 │   ├── intermediate/
 │   │   ├── int_installments_unified.sql
 │   │   ├── int_contracts.sql
@@ -430,7 +431,8 @@ portfolio_estate_analytics:
 - O `profiles.yml` está no `.gitignore` — nunca instrua o usuário
   a versioná-lo
 - Ao gerar YAML de documentação, siga o padrão: `_stg_sources.yml`
-  para staging, `_int_models.yml` para intermediate,
-  `_marts_models.yml` para marts
+  para declaração das fontes raw, `_stg_models.yml` para testes e
+  documentação dos modelos de staging, `_int_models.yml` para
+  intermediate e `_marts_models.yml` para marts
 - Ao usar `dbt_utils`, sempre verifique se `packages.yml` está
   presente e se `dbt deps` foi executado
