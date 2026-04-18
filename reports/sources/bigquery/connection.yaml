@@ -1,0 +1,5 @@
+name: bigquery
+type: bigquery
+options:
+  project_id: portfolio-estate-analytics
+  authenticator: gcloud-cli
