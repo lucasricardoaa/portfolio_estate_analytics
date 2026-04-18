@@ -49,9 +49,15 @@ Four dimensions: `dim_titular`, `dim_contract`, `dim_unit`, `dim_date`.
 Three foreign keys to `dim_date` covering reference month, maturity date, and payment date.
 All dimensions follow SCD Type 1.
 
+![Star Schema](docs/images/portfolio_estate_analytics%20—%20Star%20Schema%20(2).png)
+
 ### dbt DAG
 
-> _Screenshot of the lineage graph — run `dbt docs serve` locally to explore the full DAG._
+![dbt DAG](docs/images/portfolio_dbt_dag_graph.jpg)
+
+### dbt Docs
+
+![dbt Docs](docs/images/dash_dbt_home.jpg)
 
 ---
 
