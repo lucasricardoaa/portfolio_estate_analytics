@@ -178,7 +178,7 @@ models:
   - name: dim_date
     description: >
       Dimensão de datas gerada via dbt_utils.date_spine.
-      Cobre o intervalo de 2022-01-01 a 2028-12-31.
+      Cobre o intervalo de 2022-01-01 a 2035-12-31.
       Usada para três papéis distintos em fct_installments: mês de referência, vencimento e pagamento.
       Nomes de mês e dia em português.
     columns:

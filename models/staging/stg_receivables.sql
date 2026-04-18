@@ -59,7 +59,7 @@ renamed AS (
         CAST(emission_date        AS DATE)     AS emission_date,
         CAST(base_date            AS DATE)     AS base_date,
         CAST(date_maturity        AS DATE)     AS date_maturity,
-        CAST(NULL                 AS DATE)     AS date_payment,
+        CAST(date_payment         AS DATE)     AS date_payment,
         CAST(situation            AS STRING)   AS situation,
         CAST(condition_id         AS STRING)   AS condition_id,
 
@@ -77,7 +77,7 @@ renamed AS (
         CAST(original_value       AS NUMERIC)  AS original_value,
         CAST(present_value        AS NUMERIC)  AS present_value,
         CAST(value_with_addiction AS NUMERIC)  AS value_with_addiction,
-        CAST(NULL                 AS NUMERIC)  AS value_payment,
+        CAST(value_payment        AS NUMERIC)  AS value_payment,
         CAST(value_original       AS NUMERIC)  AS value_original,
         CAST(interest_rate        AS NUMERIC)  AS interest_rate,
         CAST(index                AS STRING)   AS index,

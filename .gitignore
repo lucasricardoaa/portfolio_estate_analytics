@@ -30,6 +30,9 @@ venv/
 .DS_Store
 Thumbs.db
 
+# Notas de sessão — nunca versionar
+/docs/notes/
+
 # Evidence.dev — artefatos gerados
 /reports/build/
 /reports/.evidence/
