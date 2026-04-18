@@ -1,0 +1,72 @@
+// portfolio_estate_analytics — Star Schema
+// Gerado para uso em dbdiagram.io
+// Surrogate keys são VARCHAR (hash MD5 via dbt_utils.generate_surrogate_key)
+
+Table fct_installments {
+  installment_sk varchar [pk]
+  contract_sk varchar [ref: > dim_contract.contract_sk]
+  unit_sk varchar [ref: > dim_unit.unit_sk]
+  titular_sk varchar [ref: > dim_titular.titular_sk]
+  date_reference_sk varchar [ref: > dim_date.date_sk]
+  date_maturity_sk varchar [ref: > dim_date.date_sk]
+  date_payment_sk varchar [ref: > dim_date.date_sk]
+  installment_id string
+  installment_type string
+  payment_status string
+  present_value numeric
+  value_payment numeric
+  original_value numeric
+  date_reference date
+  date_maturity date
+  date_payment date
+  interest_rate numeric
+  financing_type string
+  condition_id string
+}
+
+Table dim_contract {
+  contract_sk varchar [pk]
+  contract_code string
+  titular_sk varchar [ref: > dim_titular.titular_sk]
+  unit_sk varchar [ref: > dim_unit.unit_sk]
+  financing_type string
+  emission_date date
+  base_date date
+  value_original numeric
+}
+
+Table dim_unit {
+  unit_sk varchar [pk]
+  unit_id string
+  unit_name string
+  estate_code string
+  estate_name string
+  estate_typology_code string
+  property_type string
+  floor string
+  private_area numeric
+  common_area numeric
+  usable_area numeric
+  terrain_area numeric
+}
+
+Table dim_titular {
+  titular_sk varchar [pk]
+  titular_code string
+  titular_name string
+  titular_type string
+}
+
+Table dim_date {
+  date_sk varchar [pk]
+  date_day date
+  year int
+  quarter int
+  month int
+  month_name string
+  week_of_year int
+  day_of_week int
+  day_name string
+  is_weekend boolean
+  year_month string
+}
