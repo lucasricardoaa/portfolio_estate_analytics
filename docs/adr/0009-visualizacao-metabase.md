@@ -78,9 +78,7 @@ cobrir ao menos:
 
 O Metabase Cloud armazena dashboards e perguntas em sua própria
 infraestrutura — não há artefatos de dashboard para versionar
-no repositório Git. O que é versionado é apenas este ADR e,
-opcionalmente, queries SQL salvas em `analyses/` do projeto dbt
-que sirvam de referência para as perguntas criadas no Metabase.
+no repositório Git. O que é versionado é apenas este ADR.
 
 ---
 
@@ -165,8 +163,6 @@ que sirvam de referência para as perguntas criadas no Metabase.
   no repositório Git
 - Se o usuário pedir para versionar dashboards do Metabase,
   explique que o Metabase Cloud não suporta versionamento Git
-  nativo — a alternativa é salvar as queries de referência
-  em `analyses/` do projeto dbt
-- Queries SQL criadas para o Metabase podem ser salvas em
-  `analyses/` como referência — isso é opcional mas recomendado
-  para rastreabilidade
+  nativo — dashboards e perguntas ficam na infraestrutura da ferramenta
+- O Metabase é configurado diretamente a partir dos datasets
+  no BigQuery — não são necessários arquivos de referência no repositório

@@ -74,7 +74,6 @@ Five pages covering:
 
 ```
 portfolio_estate_analytics/
-├── analyses/              ← ad hoc SQL queries (Metabase reference)
 ├── docs/
 │   └── adr/               ← ADRs 000–009 (architectural source of truth)
 ├── models/

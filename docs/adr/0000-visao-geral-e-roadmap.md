@@ -126,7 +126,6 @@ da camada de visualização.
 
 ```
 portfolio_estate_analytics/
-├── analyses/
 ├── data/
 │   ├── original/        ← nunca versionado — dados reais
 │   └── processed/       ← nunca versionado — Parquet anonimizados

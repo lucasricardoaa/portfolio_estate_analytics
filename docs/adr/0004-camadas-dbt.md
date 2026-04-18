@@ -256,7 +256,6 @@ Instalar com `dbt deps` antes do primeiro `dbt build`.
 
 ```
 portfolio_estate_analytics/
-├── analyses/
 ├── data/
 │   ├── original/        ← nunca versionado (.gitignore)
 │   └── processed/       ← nunca versionado (.gitignore)
