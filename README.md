@@ -102,7 +102,60 @@ portfolio_estate_analytics/
 
 ---
 
-## How to Reproduce
+## Running Locally with DuckDB (no GCP required)
+
+The pipeline can run 100% offline using DuckDB. Raw Parquet files in `data/processed/` are used directly — no BigQuery access needed.
+
+### Prerequisites (local)
+
+- Python 3.10+ with `duckdb` installed (`pip install dbt-duckdb`)
+- dbt-fusion binary in PATH (already installed at `~/.local/bin/dbt`)
+- `~/.dbt/profiles.yml` with the `local` output configured (see [ADR-0010](docs/adr/0010-duckdb-warehouse-local.md))
+
+### 1. Initialize DuckDB (first time only)
+
+Registers the Parquet files as views in the local warehouse:
+
+```bash
+py -3.14 scripts/init_duckdb.py
+```
+
+### 2. Run the pipeline
+
+```bash
+dbt build --target local
+```
+
+All 10 models and 88 tests run in ~6 seconds.
+
+### 3. Where is the output?
+
+`data/local.duckdb` — never versioned (in `.gitignore`).
+
+### 4. Connect BI tools
+
+**Power BI**: use the DuckDB ODBC driver or connect via the community connector.
+
+**DBeaver**: File → New Connection → DuckDB → select `data/local.duckdb`.
+
+Tables available after `dbt build`:
+- `main_marts.fct_installments` (5,074 rows)
+- `main_marts.dim_contract` (129 rows)
+- `main_marts.dim_titular` (104 rows)
+- `main_marts.dim_unit` (123 rows)
+- `main_marts.dim_date` (5,113 rows)
+
+### 5. Switch back to BigQuery
+
+```bash
+dbt build --target dev
+```
+
+No SQL changes required — same models, different engine.
+
+---
+
+## How to Reproduce (BigQuery)
 
 ### Prerequisites
 

@@ -37,3 +37,8 @@ Thumbs.db
 /reports/build/
 /reports/.evidence/
 /reports/node_modules/
+
+# DuckDB — banco local, nunca versionar
+*.duckdb
+*.duckdb.wal
+/data/local.duckdb
