@@ -42,7 +42,9 @@ final AS (
             WHEN 7 THEN 'Domingo'
         END                                                         AS day_name,
         MOD(EXTRACT(DAYOFWEEK FROM date_day) + 5, 7) + 1 IN (6, 7) AS is_weekend,
-        FORMAT_DATE('%Y-%m', date_day)                              AS year_month
+        CAST(EXTRACT(YEAR FROM date_day) AS STRING)
+          || '-' ||
+          LPAD(CAST(EXTRACT(MONTH FROM date_day) AS STRING), 2, '0') AS year_month
     FROM date_spine
 )
 

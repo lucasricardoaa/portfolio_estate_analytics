@@ -29,7 +29,7 @@ row_numbered AS (
 ),
 
 deduped_final AS (
-    SELECT * EXCEPT (_row_num)
+    SELECT *
     FROM row_numbered
     WHERE _row_num = 1
 ),
