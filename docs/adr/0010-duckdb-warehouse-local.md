@@ -96,3 +96,21 @@ Os testes de PII (`tests/raw/assert_no_cpf_*.sql`, `tests/raw/assert_no_cnpj_*.s
 - Rodar `py -3.14 scripts/init_duckdb.py` é pré-requisito do primeiro `dbt build --target local` em uma máquina nova.
 - Para BigQuery (`--target dev`): usar o binário `dbt` (dbt-fusion) normalmente.
 - `dim_date` produzirá valores incorretos de `day_of_week`/`day_name`/`is_weekend` em DuckDB até correção futura.
+
+---
+
+## Notas de Implementação
+
+Durante a migração, três trechos de SQL foram reescritos para usar sintaxe SQL padrão (ANSI) no lugar de funções específicas do BigQuery:
+
+| Trecho original (BigQuery) | Substituição adotada |
+|---|---|
+| `SELECT * EXCEPT (col)` | `SELECT *` — a coluna `_row_num` é naturalmente descartada pela CTE `renamed` seguinte, que lista colunas explicitamente |
+| `FORMAT_DATE('%Y-%m', data)` | `CAST(EXTRACT(YEAR FROM data) AS STRING) \|\| '-' \|\| LPAD(CAST(EXTRACT(MONTH FROM data) AS STRING), 2, '0')` |
+| `REGEXP_CONTAINS(col, pattern)` nos testes de PII raw | Bloco Jinja: `regexp_full_match` em DuckDB, `REGEXP_CONTAINS` em BigQuery — única das três que permanece explicitamente condicional por adapter |
+
+As duas primeiras substituições usam apenas sintaxe ANSI e devem rodar igualmente em BigQuery e DuckDB. No entanto, **essas mudanças ainda não foram revalidadas em BigQuery após a refatoração**. O risco é baixo — `SELECT *` e funções de EXTRACT/CAST/LPAD são amplamente suportadas — mas a verificação não foi feita.
+
+**Recomendação:** antes de qualquer deploy futuro em BigQuery (`dbt build --target dev`), rodar `dbt build --target dev` em ambiente com acesso GCP para confirmar que as substituições não introduziram regressão nos models afetados (`stg_payments`, `stg_receivables`, `dim_date`).
+
+**Por que registrar isso:** o plano original previa portabilidade "sem alterar SQL". Na prática, três adaptações foram necessárias — duas por sintaxe proprietária de engine, uma por função de regex. Registrar aqui mantém o histórico honesto e facilita revisão futura.
