@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: raw
-    database: "{{ env_var('GCP_PROJECT_ID') }}"
+    database: "{{ env_var('GCP_PROJECT_ID', 'local') }}"
     schema: raw
     tables:
       - name: raw_payments
